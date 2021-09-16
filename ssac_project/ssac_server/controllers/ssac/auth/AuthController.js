@@ -26,18 +26,16 @@ const AuthController = {
     const sql = "insert into user (id, password) values (?, ?)";
     const params = [id, password];
     con.query(sql, params, (err, result) => {
-      if (!result) {
+      if (id === id && password === password) {
+        res.status(200).json({
+          message: "로그인 성공",
+        });
+      } else {
+        res.status(400).json({
+          message: "로그인 실패",
+        });
       }
     });
-    // const sql = "select * from user where id = ? ";
-    // const params = [id]
-    // con.query(sql, params, (err, result)=>{
-    //   if(!result){
-
-    //   }else{
-
-    //   }
-    // })
   },
 };
 
