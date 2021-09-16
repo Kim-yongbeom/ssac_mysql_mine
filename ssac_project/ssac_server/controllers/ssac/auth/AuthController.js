@@ -7,7 +7,7 @@ const AuthController = {
     const params = [id, name, password];
     console.log(req.body);
     con.query(sql, params, (err, result) => {
-      if (id === id) {
+      if (id) {
         console.log(err);
         return res.status(400).json({
           message: "이미 있는 아이디입니다",
@@ -26,7 +26,7 @@ const AuthController = {
     const sql = "insert into user (id, password) values (?, ?)";
     const params = [id, password];
     con.query(sql, params, (err, result) => {
-      if (id === id && password === password) {
+      if (id && password) {
         res.status(200).json({
           message: "로그인 성공",
         });
