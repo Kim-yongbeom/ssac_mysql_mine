@@ -1,9 +1,12 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+const boardRouter = require("./ssac/board/index");
+const signinRouter = require("./ssac/signin");
+const signupRouter = require("./ssac/signup");
+
+router.use("/ssac/board", boardRouter);
+router.use("/ssac/signin", signinRouter);
+router.use("/ssac/signup", signupRouter);
 
 module.exports = router;

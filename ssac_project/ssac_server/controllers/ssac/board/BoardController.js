@@ -42,8 +42,45 @@ const BoardController = {
   },
 
   //POST
+  uploadBoard: (req, res) => {
+    const { title, content, boardPw, writer } = req.body;
+    const sql =
+      "insert into membership (title, content, boardPw, writer) values (?, ?, ?, ?)";
+    const params = [title, content, boardPw, writer];
+    console.log(req.body);
+    con.query(sql, params, (err, result) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({
+          message: "에러가 발생 했습니다.",
+        });
+      }
+
+      res.status(200).json({
+        message: "생성이 완료 되었습니다.",
+      });
+    });
+  },
 
   //DELETE
+  deleteBoard: (req, res) => {
+    const { boardIdx } = req.params;
+    const sql = `delete from ssac_todolist where boardIdx = ?`;
+    const params = [Number(boardIdx)];
+
+    con.query(sql, params, (err, result) => {
+      if (err) {
+        return res.status(400).json({
+          message: "삭제 실패",
+        });
+      }
+
+      res.status(200).json({
+        message: "삭제 완료",
+      });
+      console.log(result);
+    });
+  },
 };
 
-module.exports = membershipController;
+module.exports = BoardController;
