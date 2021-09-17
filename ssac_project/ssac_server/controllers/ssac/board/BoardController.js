@@ -44,29 +44,31 @@ const BoardController = {
   //POST
   uploadBoard: (req, res) => {
     const { title, content, boardPw, writer } = req.body;
-    const sql =
-      "insert into board (writer, title, content, writeTime, boardPw) values (?, ?, ?, ?, ?)";
-    const params = [writer, title, content, new Data(), boardPw];
-    console.log(req.body);
-    con.query(sql, params, (err, result) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).json({
-          message: "에러가 발생 했습니다.",
+
+    con.query(
+      `INSERT INTO board (title, content, writer, writeTime, boardPw) VALUES (?, ?, ?, ?, ?)`,
+      [title, content, Number(writer), new Date(), boardPw],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({
+            message: "에러가 발생하였습니다.",
+          });
+        }
+
+        res.status(200).json({
+          message: "게시글을 저장하였습니다.",
+          data: result,
         });
       }
-
-      res.status(200).json({
-        message: "생성이 완료 되었습니다.",
-      });
-    });
+    );
   },
 
   //DELETE
   deleteBoard: (req, res) => {
-    const { boardIdx } = req.params;
+    const { idx } = req.params;
     const sql = `delete from board where boardIdx = ?`;
-    const params = [Number(boardIdx)];
+    const params = [Number(idx)];
 
     con.query(sql, params, (err, result) => {
       if (err) {
