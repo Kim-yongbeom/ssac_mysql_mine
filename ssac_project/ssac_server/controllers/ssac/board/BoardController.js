@@ -17,11 +17,11 @@ const BoardController = {
   },
 
   detailBoard: (req, res) => {
-    const { boardIdx } = req.params;
+    const { idx } = req.params;
     const sql = "select * from board where boardIdx = ?";
-    const params = [boardIdx];
+    const params = [Number(idx)];
 
-    if (boardIdx) {
+    if (idx) {
       con.query(sql, params, (err, result) => {
         if (err)
           return res.status(400).json({
