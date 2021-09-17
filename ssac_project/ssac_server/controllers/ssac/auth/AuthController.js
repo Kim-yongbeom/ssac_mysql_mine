@@ -12,11 +12,7 @@ const AuthController = {
         });
       }
 
-      if (result) {
-        res.status(400).json({
-          message: "이미 같은 아이디가 있습니다",
-        });
-      } else {
+      if (result.length === 0) {
         const sqlInsert =
           "insert into user (id, name, password) values (?, ?, ?)";
         const paramsInsert = [id, name, password];
@@ -29,6 +25,10 @@ const AuthController = {
           res.status(200).json({
             message: "아이디 생성",
           });
+        });
+      } else {
+        res.status(400).json({
+          message: "이미 같은 아이디가 있습니다",
         });
       }
     });
@@ -44,13 +44,13 @@ const AuthController = {
           message: "에러가 발생 했습니다",
         });
       }
-      if (result) {
-        res.status(200).json({
-          message: "로그인 성공",
-        });
-      } else {
+      if (result.length === 0) {
         res.status(400).json({
           message: "로그인 실패",
+        });
+      } else {
+        res.status(200).json({
+          message: "로그인 성공",
         });
       }
     });
