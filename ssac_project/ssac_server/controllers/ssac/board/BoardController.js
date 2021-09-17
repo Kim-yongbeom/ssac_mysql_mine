@@ -45,8 +45,8 @@ const BoardController = {
   uploadBoard: (req, res) => {
     const { title, content, boardPw, writer } = req.body;
     const sql =
-      "insert into membership (title, content, boardPw, writer) values (?, ?, ?, ?)";
-    const params = [title, content, boardPw, writer];
+      "insert into board (writer, title, content, writeTime, boardPw) values (?, ?, ?, ?, ?)";
+    const params = [writer, title, content, new Data(), boardPw];
     console.log(req.body);
     con.query(sql, params, (err, result) => {
       if (err) {
@@ -65,7 +65,7 @@ const BoardController = {
   //DELETE
   deleteBoard: (req, res) => {
     const { boardIdx } = req.params;
-    const sql = `delete from ssac_todolist where boardIdx = ?`;
+    const sql = `delete from board where boardIdx = ?`;
     const params = [Number(boardIdx)];
 
     con.query(sql, params, (err, result) => {
